@@ -1,0 +1,13 @@
+<%- include('../partials/header.ejs') %>
+<div class="reglog">
+
+  <form action="/login" method="post" id="login" class="card">
+    <label for="email">Email</label>
+    <input type="text" name="email" id="email" required>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" placeholder="Enter your password" required>
+    <button type="submit">Login</button>
+  </form>
+</div>
+
+<%- include('../partials/footer.ejs') %>
