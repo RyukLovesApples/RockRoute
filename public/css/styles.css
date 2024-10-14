@@ -101,7 +101,7 @@ footer {
   flex-direction: column;
   justify-content: center;
   width: 50%;
-  margin: 100px auto; /* Centers the form horizontally */
+  margin: 100px auto;
   padding: 20px;
   height: min-content;
   z-index: 1;
