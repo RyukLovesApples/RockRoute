@@ -33,12 +33,12 @@ router.post("/register", async (req, res) => {
   const password = req.body.password;
 
   try {
-    const checkEmail = await User.checkEmail(email); // Make sure to await the checkEmail call
+    const checkEmail = await User.checkEmail(email); 
     if (checkEmail.rows.length > 0) {
       res.send("Account already exists");
-      return; // Make sure to return after sending a response
+      return;
     } else {
-      await User.create(email, username, password); // Make sure to await the create call
+      await User.create(email, username, password);
       res.redirect("/");
     }
   } catch (err) {
@@ -47,6 +47,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/login", authenticateUser); // Use the authenticateUser function
+router.post("/login", authenticateUser);
 
-export default router; // Export the router
+export default router;

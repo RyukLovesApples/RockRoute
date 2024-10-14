@@ -33,7 +33,6 @@ export function verifyUser() {
           const storedHashedPassword = user.password;
           bcrypt.compare(password, storedHashedPassword, (err, valid) => {
             if (err) {
-              //Error with password check
               console.error("Error comparing passwords:", err);
               return cb(err);
             } else {

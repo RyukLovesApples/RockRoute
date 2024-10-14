@@ -1,4 +1,4 @@
-import pkg from "pg"; // Import the entire module
+import pkg from "pg";
 const { Pool } = pkg;
 import env from "dotenv";
 
