@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Page</title>
+  <link rel="stylesheet" href="/css/styles.css">
+<body>
+  <header>
+    <nav>
+      <ul>
+      <% if(!user && !locals.isLoginPage) {%>
+        <button><li><a href="/login">Login</a></li></button>
+        <button><li><a href="/register">Register</a></li></button>
+        <% } else if(user) { %>
+          <button><li><a href="/profile">Profile</a></li></button>
+          <button><li><a href="/logout">Logout</a></li></button>
+          <% } else {%>
+            <a href="/">Home</a>
+            <% } %>
+        </ul>
+    </nav>
+    <h1>Welcome to RockRoute</h1>
+    <p>Your place to share and discover rock climbing routes.</p>
+  </header>
