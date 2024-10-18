@@ -6,7 +6,17 @@
   </section>
 
   <section class="card" id="posts">
+    <button><a href="/posts/new">Create Post</a></button>
+
     <h2>Featured Posts</h2>
+    <% if(locals.posts) {%>
+      <% posts.forEach(post => {%>
+        <article>
+      <h3><a href='/posts/<%=post.id%>'><%= post.title%></a></h3>
+      <p><%= post.content%></p>
+      <p><strong>Author:</strong> <%= post.username%></p>
+        </article>
+      <%})}%>
     <article>
       <h3>Epic Route in Fontainebleau</h3>
       <p>Climb the epic boulders of Fontainebleau, France. With over 25,000 routes, it's a dream destination for any boulderer.</p>

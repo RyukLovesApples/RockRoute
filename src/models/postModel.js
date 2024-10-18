@@ -10,16 +10,16 @@ export class Post {
 
   static async getPosts() {
     try{
-      const result = await pool.query("SELECT * FROM posts ORDER BY upvotes DESC");
+      const result = await pool.query("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id");
       return result.rows;
     } catch(err) {
-      console.log("Failed to fetch all posts: ", err);
+      console.log("Failed to fetch posts: ", err);
     }
   }
 
-  static async getById(id) {
+  static async findById(id) {
     try{
-      const result = await pool.query("SELECT * FROM posts WHERE id = $1", [id]);
+      const result = await pool.query("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE posts.id = $1", [id]);
       return result.rows[0];
     } catch(err) {
       console.log("Failed to fetch post: ", err);

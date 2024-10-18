@@ -9,15 +9,14 @@
   <header>
     <nav>
       <ul>
+        <button><li><a href="/">Home</a></li></button>
       <% if(!user && !locals.isLoginPage) {%>
         <button><li><a href="/login">Login</a></li></button>
         <button><li><a href="/register">Register</a></li></button>
         <% } else if(user) { %>
           <button><li><a href="/profile">Profile</a></li></button>
           <button><li><a href="/logout">Logout</a></li></button>
-          <% } else {%>
-            <a href="/">Home</a>
-            <% } %>
+          <% }%>
         </ul>
     </nav>
     <h1>Welcome to RockRoute</h1>
