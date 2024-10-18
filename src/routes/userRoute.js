@@ -6,10 +6,6 @@ const router = Router();
 
 verifyUser();
 
-router.get("/", (req, res) => {
-  res.render("index");
-});
-
 router.get("/login", (req, res) => {
   res.render("login", { isLoginPage: true });
 });
@@ -33,7 +29,7 @@ router.post("/register", async (req, res) => {
   const password = req.body.password;
 
   try {
-    const checkEmail = await User.checkEmail(email); 
+    const checkEmail = await User.checkEmail(email);
     if (checkEmail.rows.length > 0) {
       res.send("Account already exists");
       return;

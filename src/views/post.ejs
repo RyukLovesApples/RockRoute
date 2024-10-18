@@ -1,0 +1,20 @@
+<%- include('../partials/header.ejs') %>
+
+<h3><%=post.title%></h3>
+
+<p><%=post.content%></p>
+
+<p><strong>Author:</strong> <%=post.username%></p>
+
+<% if(locals.userId) { %>
+<% if(post.user_id === userId) { %>
+<button><a href="/posts/<%=post.id%>/edit">Update</a></button>
+
+<form id="deleteForm" action="/posts/<%= post.id %>/delete" method="POST">
+  <input type="hidden" name="_method" value="DELETE">
+  <button type="submit">Delete Post</button>
+</form>
+<% } %>
+<% } %>
+
+<%- include('../partials/footer.ejs') %>

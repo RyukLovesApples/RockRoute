@@ -11,6 +11,7 @@ export function initializeSession(app) {
       secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: true,
+      cookie: {secure: false, maxAge: 30 * 60 * 1000}
     })
   );
 }
@@ -24,7 +25,11 @@ export function initializePassport(app) {
   });
 
   passport.deserializeUser(async (id, cb) => {
-    const user = await User.findById(id);
-    cb(null, user);
+    try {
+      const user = await User.findById(id);
+      cb(null, user);
+    } catch(err) {
+      cb(err, null);
+    }
   });
 }
