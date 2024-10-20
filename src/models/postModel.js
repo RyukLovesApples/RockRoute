@@ -28,7 +28,7 @@ export class Post {
 
   static async create(title, content, user_id) {
     try {
-      const result = await pool.query("INSERT INTO posts(title, content, user_id) VALUES ($1, $2, $3) RETURNING *", [title, content, user_id]);
+      const result = await pool.query("INSERT INTO posts(title, content, user_id, created_at, updated_at) VALUES ($1, $2, $3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING *", [title, content, user_id]);
       console.log("Successfully created post: ", result.rows[0]);
       return result.rows[0];
     } catch(err) {
@@ -38,7 +38,7 @@ export class Post {
 
   static async update(id, title, content) {
     try {
-      const result = await pool.query("UPDATE posts SET title = $1, content = $2 WHERE id = $3 RETURNING *", [title, content, id]);
+      const result = await pool.query("UPDATE posts SET title = $1, content = $2, updated_at = CURRENT_TIMESTAMP WHERE id = $3 RETURNING *", [title, content, id]);
       console.log("Successfully updated post: ", result.rows[0]);
       return result.rows[0];
     } catch(err) {
