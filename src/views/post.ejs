@@ -1,10 +1,14 @@
 <%- include('../partials/header.ejs') %>
+<div class="card">
 
-<h3><%=post.title%></h3>
+  <h3><%=post.title%></h3>
 
-<p><%=post.content%></p>
+  <p><%=post.content%></p>
 
-<p><strong>Author:</strong> <%=post.username%></p>
+  <p><strong>Author:</strong> <%=post.username%></p>
+  <p><small>Created at: <%= new Date(post.created_at).toLocaleDateString('de-DE') %></small></p>
+  <p><small>Updated at: <%= new Date(post.updated_at).toLocaleDateString('de-DE') %></small></p>
+</div>
 
 <% if(locals.userId) { %>
 <% if(post.user_id === userId) { %>
