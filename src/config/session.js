@@ -11,7 +11,7 @@ export function initializeSession(app) {
       secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: true,
-      cookie: {secure: false, maxAge: 30 * 60 * 1000}
+      cookie: {secure: false, maxAge: 60 * 60 * 1000}
     })
   );
 }

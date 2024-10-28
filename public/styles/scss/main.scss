@@ -1,0 +1,14 @@
+@use 'variables';
+@use 'mixins';
+@use 'base';
+@use 'header';
+@use 'footer';
+@use 'buttons';
+@use 'cards';
+@use 'forms';
+@use 'user-info'
+
+
+// create partial for user-info and controls
+// create link that from index that automatically gets the post and sets the cursor to the comment section
+// create partial for general section with categories. maybe include category in post table

@@ -4,21 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home Page</title>
-  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/styles/css/main.css">
+  </head>
 <body>
   <header>
     <nav>
+      <button><a href="/"><i class="fas fa-mountain">  RockRoute</i></a></button>
       <ul>
-        <button><li><a href="/">Home</a></li></button>
       <% if(!user && !locals.isLoginPage) {%>
         <button><li><a href="/login">Login</a></li></button>
         <button><li><a href="/register">Register</a></li></button>
         <% } else if(user) { %>
-          <button><li><a href="/profile">Profile</a></li></button>
-          <button><li><a href="/logout">Logout</a></li></button>
+          <div id="userOption">
+            <li><a href="/posts/new">Create Post</a></li>
+            <div class="avatar-dropdown">
+              <img src="/images/download.png" alt="Avatar" class="avatar" onclick="toggleDropdown()">
+              <div class="dropdown-content" id="dropdown">
+                <a href="#">Profile</a>
+                <a href="#">Settings</a>
+                <a href="/logout">Logout</a>
+              </div>
+            </div>
+          </div>
           <% }%>
         </ul>
     </nav>
-    <h1>Welcome to RockRoute</h1>
-    <p>Your place to share and discover rock climbing routes.</p>
   </header>
+  <main>

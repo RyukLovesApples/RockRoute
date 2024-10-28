@@ -1,24 +1,56 @@
 <%- include('../partials/header.ejs') %>
-<div class="card">
 
-  <h3><%=post.title%></h3>
+<div id="completePostCard">
 
-  <p><%=post.content%></p>
+  <div class="author-info-card">
+    <img src="/images/download.png" alt="<%= post.username %> avatar" class="avatar">
+    <div class="user-info">
+      <p class="username"><%= post.username %></p>
+      <time datetime="<%= post.created_at.toISOString() %>">Created at: <%= new Date(post.created_at).toLocaleDateString('de-DE') %></time>
+    </div>
+  </div>
 
-  <p><strong>Author:</strong> <%=post.username%></p>
-  <p><small>Created at: <%= new Date(post.created_at).toLocaleDateString('de-DE') %></small></p>
-  <p><small>Updated at: <%= new Date(post.updated_at).toLocaleDateString('de-DE') %></small></p>
+  <h3><%= post.title %></h3>
+  <p><%= post.content %></p>
+
+  <div class="controls">
+  <div class="general-controls">
+    <button><i class="fa-solid fa-arrow-up"></i> 12 <i class="fa-solid fa-arrow-down"></i></button>
+    <button><i class="fa-regular fa-comment"></i> <%= topLevelCount%> </button>
+    <button><i class="fa-solid fa-share"></i> Share</button>
+  </div>
+
+  <% if (locals.userId) { %>
+    <% if (post.user_id === userId) { %>
+      <div class="logged-user-controls">
+        <button>
+          <a href="/posts/<%= post.id %>/edit">
+            <i class="fas fa-edit"></i> Edit
+          </a>
+        </button>
+        <form class="deleteForm" action="/posts/<%= post.id %>/delete" method="POST">
+          <input type="hidden" name="_method" value="DELETE">
+          <button type="submit">
+            <i class="fa-solid fa-trash"></i> Delete
+          </button>
+        </form>
+      </div>
+        <% } %>
+        <% } %>
+    </div>
+
+  <form action="/comments/new" method="POST" id="commentForm">
+    <input type="hidden" name="postId" value="<%= post.id %>">
+    <input type="hidden" name="userId" value="<%= userId %>">
+    <input type="text" name="content" id="commentFormInput" placeholder="Add a comment" required>
+    <button type="submit">
+      <i class="fa fa-arrow-circle-right fa-lg"></i>
+    </button>
+  </form>
+
+  <div class="comments">
+    <%- comments %>
+  </div>
 </div>
-
-<% if(locals.userId) { %>
-<% if(post.user_id === userId) { %>
-<button><a href="/posts/<%=post.id%>/edit">Update</a></button>
-
-<form id="deleteForm" action="/posts/<%= post.id %>/delete" method="POST">
-  <input type="hidden" name="_method" value="DELETE">
-  <button type="submit">Delete Post</button>
-</form>
-<% } %>
-<% } %>
 
 <%- include('../partials/footer.ejs') %>

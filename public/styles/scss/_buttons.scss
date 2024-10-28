@@ -1,0 +1,26 @@
+@use 'variables';
+@use "mixins";
+
+button {
+  background-color: variables.$button-bg-color;
+  color: variables.$button-text-color;
+  border: none;
+  padding: variables.$padding-base;
+  border-radius: variables.$border-radius;
+  cursor: pointer;
+
+  &:hover {
+    @include mixins.box-shadow(3px 3px 8px rgba(0, 0, 0, 0.2));
+  }
+}
+
+.controls button {
+  cursor: pointer;
+  border: 0.1rem solid black;
+  border-radius: variables.$border-radius-button;
+  background-color: variables.$button-text-color;
+  color: variables.$primary-color;
+  padding: variables.$padding-base-button;
+  font-size: 1.4rem;
+  margin-right: 0.5rem;
+}
