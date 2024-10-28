@@ -1,12 +1,27 @@
 import { Post } from "../models/postModel.js";
+import { Comment } from "../models/commentModel.js";
+import { buildCommentTree } from "../../public/js/utils/commentTree.js";
+import { renderComment } from "../../public/js/template/commentReply.js";
 
 export class PostController {
-  constructor() {
-  }
 
   getAllPosts = async (req, res) => {
     try {
       const posts = await Post.getPosts();
+      if(posts) {
+        const commentsPromises = posts.map(async (post) => {
+          try {
+              return await Comment.getComments(post.id);
+          } catch (error) {
+              console.log(`Error fetching comments for post ${post.id}: `, error);
+              return [];
+          }
+      });
+      const comments = await Promise.all(commentsPromises);
+      posts.forEach((post, index) => {
+        post.comments = comments[index] || [];
+      });
+      }
       res.render("index", {posts: posts});
     } catch(err) {
       console.log("Error loading posts: ", err)
@@ -25,7 +40,17 @@ export class PostController {
       if (!post) {
         return res.status(404).send("Post not found.");
       }
-        res.render("post", {post: post, userId: userId});
+      let commentTree = [];
+      let commentsHTML = "";
+      let topLevelCommentCount = 0;
+      const comments = await Comment.getComments(postId);
+      if(comments) {
+        const topLevelComments = comments.filter(comment => !comment.parent_comment_id);
+        topLevelCommentCount = topLevelComments.length;
+        commentTree = buildCommentTree(comments);
+        commentsHTML = commentTree.map(comment => renderComment(comment, userId)).join('');
+      }
+      res.render("post", {post: post, userId: userId, comments: commentsHTML, topLevelCount: topLevelCommentCount});
     } catch(err) {
       console.log("Error loading post: ", err);
       res.status(500).send("Error loading post.");

@@ -5,7 +5,9 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run build-css && nodemon ./src/app.js",
+    "build-css": "sass public/styles/scss/main.scss public/styles/css/main.css",
+    "watch-css": "sass --watch scss/main.scss:css/main.css"
   },
   "repository": {
     "type": "git",
@@ -29,6 +31,11 @@
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "pg": "^8.13.0",
-    "pg-pool": "^3.7.0"
+    "pg-pool": "^3.7.0",
+    "prettier": "^3.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7",
+    "sass": "^1.80.3"
   }
 }

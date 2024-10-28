@@ -1,0 +1,85 @@
+@use 'variables';
+@use "mixins";
+
+#login, #register {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 100px auto;
+  padding: variables.$padding-large;
+  height: min-content;
+  z-index: 1;
+  width: 60%;
+
+  input {
+    width: 95%;
+    font-size: variables.$font-size-medium;
+    padding: variables.$padding-base;
+    margin: variables.$margin-base;
+  }
+}
+
+  #commentForm {
+    margin-bottom: variables.$margin-base;
+
+    input{
+      margin-top: 2rem;
+      padding: 10px 20px;
+      width: 90%;
+      font-size: 1.5rem;
+      color: #333;
+      background-color: #fff;
+      border: 1px solid #b09f9f;
+      border-radius: 5px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+    }
+  }
+
+  button {
+    font-size: variables.$font-size-large;
+    color: variables.$button-text-color;
+    border-radius: variables.$border-radius;
+    padding: variables.$padding-base;
+
+    &:hover {
+      @include mixins.box-shadow(3px 3px 8px rgba(0, 0, 0, 0.2));
+    }
+  }
+  .textarea-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+  }
+
+#commentUpdateInput {
+    margin-top: 2rem;
+    padding: 10px 20px;
+    padding-bottom: 50px;
+    font-size: 1.5rem;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #b09f9f;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    font-family: variables.$font-family;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+    min-height: 50px;
+    max-height: 150px;
+    overflow-y: hidden;
+    resize: none;
+    width: 100%;
+    box-sizing: border-box; /* Include padding and border in the total width */
+}
+
+.button-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.cancel-button {
+    margin-left: 5px;
+}
