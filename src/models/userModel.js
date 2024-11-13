@@ -19,7 +19,7 @@ export class User {
   };
 
   static async findById(id) {
-    try{
+    try {
       const userID = Number(id);
       const result = await pool.query("SELECT id, email, username FROM users WHERE id = $1", [userID]);
       return result.rows[0];

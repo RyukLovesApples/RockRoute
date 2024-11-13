@@ -15,8 +15,26 @@
 
   <div class="controls">
   <div class="general-controls">
-    <button><i class="fa-solid fa-arrow-up"></i> 12 <i class="fa-solid fa-arrow-down"></i></button>
-    <button><i class="fa-regular fa-comment"></i> <%= topLevelCount%> </button>
+    <div class="vote-controls">
+      <form action="<%= locals.userVote && userVote.upvote ? `/vote/${userVote.id}` : '/vote' %>" method="POST" class="vote-form">
+        <input type="hidden" name="postId" value="<%= post.id %>">
+        <input type="hidden" name="userId" value="<%= userId %>">
+        <input type="hidden" name="vote" value="upvote">
+        <button type="submit" class="<%= locals.userVote && userVote.upvote ? 'voted' : '' %>">
+          <i class="fa-solid fa-arrow-up"></i>
+        </button>
+      </form>
+      <p id="vote-count-post-<%= post.id %>"><%= locals.voteCount ? voteCount : 0%></p>
+        <form action="<%= locals.userVote && userVote.downvote ? `/vote/${userVote.id}` : '/vote' %>" method="POST" class="vote-form">
+          <input type="hidden" name="postId" value="<%= post.id %>">
+          <input type="hidden" name="userId" value="<%= userId %>">
+          <input type="hidden" name="vote" value="downvote">
+          <button type="submit" class="<%= locals.userVote && userVote.downvote ? 'voted' : '' %>">
+            <i class="fa-solid fa-arrow-down"></i>
+          </button>
+        </form>
+    </div>
+    <button><i class="fa-regular fa-comment comment-btn"></i> <%= topLevelCount%> </button>
     <button><i class="fa-solid fa-share"></i> Share</button>
   </div>
 
@@ -35,17 +53,17 @@
           </button>
         </form>
       </div>
-        <% } %>
-        <% } %>
+    <% } %>
+  <% } %>
     </div>
 
   <form action="/comments/new" method="POST" id="commentForm">
     <input type="hidden" name="postId" value="<%= post.id %>">
     <input type="hidden" name="userId" value="<%= userId %>">
-    <input type="text" name="content" id="commentFormInput" placeholder="Add a comment" required>
-    <button type="submit">
-      <i class="fa fa-arrow-circle-right fa-lg"></i>
-    </button>
+      <input type="text" name="content" id="commentFormInput" placeholder="Add a comment" required>
+      <button type="submit">
+        <i class="fa fa-arrow-circle-right fa-lg"></i>
+      </button>
   </form>
 
   <div class="comments">

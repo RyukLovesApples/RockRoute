@@ -16,11 +16,42 @@ button {
 
 .controls button {
   cursor: pointer;
-  border: 0.1rem solid black;
+  border: variables.$button-standard-border;
   border-radius: variables.$border-radius-button;
-  background-color: variables.$button-text-color;
+  background-color: #2d2d30;
+  color: variables.$secondary-color;
+  padding: variables.$padding-base-button;
+  font-size: 1.4rem;
+  margin-right: 0.5rem;
+}
+
+.vote-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: variables.$button-standard-border;
+  border-radius: variables.$border-radius-button;
+  background-color: #2d2d30;
   color: variables.$primary-color;
   padding: variables.$padding-base-button;
   font-size: 1.4rem;
   margin-right: 0.5rem;
+  height: 1.7rem;
+  width: max-content;
+
+  button {
+    border: 0;
+    margin: 0 1rem;
+    padding: 0;
+    text-decoration: none;
+  }
+
+  p {
+    color: variables.$secondary-color;
+  }
+}
+
+.voted {
+  text-shadow: 2px 2px 0px black;
 }

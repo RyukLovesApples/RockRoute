@@ -2,7 +2,7 @@
 @use 'mixins';
 
 header {
-  background-color: variables.$primary-color;
+  background-color:  #333;
   color: variables.$secondary-color;
   padding: variables.$padding-base;
   text-align: center;
@@ -10,7 +10,7 @@ header {
   height: max-content;
   top: 0;
   z-index: 1000;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
 
   nav {
     display: flex;
@@ -82,7 +82,7 @@ header {
   }
 
   .dropdown-content a:hover {
-    background-color: #f1f1f1;
+    background-color: #5e1717;
   }
 
 }
