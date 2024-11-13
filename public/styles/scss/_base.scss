@@ -11,10 +11,6 @@ body {
   color: variables.$text-color;
   height: 100vh;
   font-size: variables.$font-size-large;
-  // background-image: url('../../images/adamOndra.jpeg');
-  // background-size: cover;
-  // background-position: center;
-  // background-attachment: fixed;
 }
 
 main {
@@ -24,7 +20,8 @@ main {
   width: 100%;
   padding: 0 variables.$padding-large variables.$padding-large variables.$padding-large;
   padding-bottom: variables.$padding-base;
-  margin-bottom: variables.$margin-base;
+  background-color: #252526;
+  color: variables.$secondary-color;
 }
 
 h1 {
@@ -47,5 +44,5 @@ p {
 
 a {
   text-decoration: none;
-  color: variables.$primary-color;
+  color: variables.$secondary-color;
 }

@@ -22,8 +22,26 @@
       <p><%= post.content%></p>
       <div class="controls">
         <div class="general-controls">
-          <button><i class="fa-solid fa-arrow-up"></i> 12 <i class="fa-solid fa-arrow-down"></i></button>
-          <button><a href="/posts/<%= post.id %>?reply=true"><i class="fa-regular fa-comment"></i></a> Reply</button>
+          <div class="vote-controls">
+            <form action="<%= post.userVote && post.userVote.upvote ? `/vote/${post.userVote.id}` : '/vote' %>" method="POST" class="vote-form">
+              <input type="hidden" name="postId" value="<%= post.id %>">
+              <input type="hidden" name="userId" value="<%= locals.userId ? userId : '' %>">
+              <input type="hidden" name="vote" value="upvote">
+              <button type="submit" class="<%= post.userVote && post.userVote.upvote ? 'voted' : '' %>">
+                <i class="fa-solid fa-arrow-up"></i>
+              </button>
+            </form>
+              <p id="vote-count-post-<%= post.id %>"><%= post.voteCount ? post.voteCount : 0 %></p>
+              <form action="<%= post.userVote && post.userVote.downvote ? `/vote/${post.userVote.id}` : '/vote' %>" method="POST" class="vote-form">
+                <input type="hidden" name="postId" value="<%= post.id %>">
+                <input type="hidden" name="userId" value="<%= locals.userId ? userId : '' %>">
+                <input type="hidden" name="vote" value="downvote">
+                <button type="submit" class="<%= post.userVote && post.userVote.downvote ? 'voted' : '' %>">
+                  <i class="fa-solid fa-arrow-down"></i>
+                </button>
+              </form>
+          </div>
+          <button><a href="/posts/<%= post.id %>?reply=true"><i class="fa-regular fa-comment"></i> <%= post.comments.length %></a> </button>
           <button><i class="fa-solid fa-share"></i> Share</button>
         </div>
       </div>

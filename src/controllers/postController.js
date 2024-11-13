@@ -2,12 +2,16 @@ import { Post } from "../models/postModel.js";
 import { Comment } from "../models/commentModel.js";
 import { buildCommentTree } from "../../public/js/utils/commentTree.js";
 import { renderComment } from "../../public/js/template/commentReply.js";
+import { VoteController } from "./voteController.js";
+
+const voteController = new VoteController();
 
 export class PostController {
-
   getAllPosts = async (req, res) => {
+    const userId = req.user ? req.user.id : null;
     try {
       const posts = await Post.getPosts();
+      let postsWithVotes = [];
       if(posts) {
         const commentsPromises = posts.map(async (post) => {
           try {
@@ -18,11 +22,16 @@ export class PostController {
           }
       });
       const comments = await Promise.all(commentsPromises);
-      posts.forEach((post, index) => {
+      postsWithVotes = await Promise.all(posts.map(async (post, index) => {
         post.comments = comments[index] || [];
-      });
+        post.voteCount = await voteController.countVotes(post.id, null);
+        if(userId) {
+          post.userVote = await voteController.checkUserVote(userId, post.id, null);
+        }
+        return post;
+      }));
       }
-      res.render("index", {posts: posts});
+      res.render("index", {posts: postsWithVotes, userId: userId});
     } catch(err) {
       console.log("Error loading posts: ", err)
       res.status(500).send("Error loading posts.");
@@ -41,16 +50,25 @@ export class PostController {
         return res.status(404).send("Post not found.");
       }
       let commentTree = [];
+      let votesMap = {};
       let commentsHTML = "";
       let topLevelCommentCount = 0;
       const comments = await Comment.getComments(postId);
       if(comments) {
+        for(const comment of comments) {
+          votesMap[comment.id] = await voteController.countVotes(null, comment.id);
+        }
         const topLevelComments = comments.filter(comment => !comment.parent_comment_id);
         topLevelCommentCount = topLevelComments.length;
         commentTree = buildCommentTree(comments);
-        commentsHTML = commentTree.map(comment => renderComment(comment, userId)).join('');
+        commentsHTML = commentTree.map(comment => renderComment({...comment, voteCount: votesMap[comment.id]}, userId)).join('');
       }
-      res.render("post", {post: post, userId: userId, comments: commentsHTML, topLevelCount: topLevelCommentCount});
+      let vote;
+      if(userId){
+        vote = await voteController.checkUserVote(userId, postId, null);
+      }
+      const voteCount = await voteController.countVotes(postId, null) || null;
+      res.render("post", {post: post, userId: userId, comments: commentsHTML, topLevelCount: topLevelCommentCount, userVote: vote, voteCount: voteCount});
     } catch(err) {
       console.log("Error loading post: ", err);
       res.status(500).send("Error loading post.");

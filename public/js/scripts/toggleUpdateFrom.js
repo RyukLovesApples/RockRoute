@@ -10,11 +10,9 @@ function toggleUpdateCommentForm(commentId) {
       if(formPosition.bottom > window.innerHeight) {
         window.scrollTo({
           top: formPosition.top + scrollTop,
-          behavior: 'smooth' 
+          behavior: 'smooth'
       });
       }
-
-
     } else {
       form.style.display = "none"
     }

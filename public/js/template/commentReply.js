@@ -13,7 +13,25 @@ export const renderComment = (comment, userId) => {
           <p>${comment.content}</p>
           <div class="controls">
               <div class="general-controls">
-                  <button><i class="fa-solid fa-arrow-up"></i> 12 <i class="fa-solid fa-arrow-down"></i></button>
+                <div class="vote-controls">
+                  <form action="${comment.userVote && comment.userVote.upvote ? "/vote/" + comment.userVote.id : "/vote"}" method="POST" class="vote-form">
+                    <input type="hidden" name="commentId" value="${comment.id}">
+                    <input type="hidden" name="userId" value="${userId}">
+                    <input type="hidden" name="vote" value="upvote">
+                    <button type="submit" class="${comment.userVote && comment.userVote.upvote ? "voted" : ""}">
+                      <i class="fa-solid fa-arrow-up"></i>
+                    </button>
+                  </form>
+                  <p id="vote-count-comment-${comment.id}">${comment.voteCount ? comment.voteCount : 0}</p>
+                  <form action="${comment.userVote && comment.userVote.downvote ? "/vote/" + comment.userVote.id : "/vote"}" method="POST" class="vote-form">
+                    <input type="hidden" name="commentId" value="${comment.id}">
+                    <input type="hidden" name="userId" value="${userId}">
+                    <input type="hidden" name="vote" value="downvote">
+                    <button type="submit" class="${comment.userVote && comment.userVote.downvote ? "voted" : ""}">
+                      <i class="fa-solid fa-arrow-down"></i>
+                    </button>
+                  </form>
+                  </div>
                   <button data-user-id="${comment.user_id}" data-post-id="${comment.post_id}" onclick="toggleCommentForm(this, '${comment.id}')">
                       <i class="fa-regular fa-comment"></i> ${comment.replies.length}
                   </button>

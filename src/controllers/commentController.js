@@ -1,19 +1,9 @@
 import { Comment } from "../models/commentModel.js";
+import { VoteController } from "./voteController.js";
+
+const voteController = new VoteController();
 
 export class CommentController {
-
-  // getAllComments = async (req, res) => {
-  //   const postId = req.posts;
-  //   console.log(postId);
-  //   try {
-  //     // if(postId) {
-  //     //   const comments = await Comment.getComments(postId);
-  //     // }
-  //   } catch (err) {
-  //     console.log("Error loading comments: ", err);
-  //     res.status(500).send("Error loading comments.");
-  //   }
-  // }
 
   createComment = async (req, res) => {
     const { content, postId, userId, parent_comment_id } = req.body;
@@ -34,7 +24,6 @@ export class CommentController {
   updateComment = async (req, res) => {
     const { postId, content, commentId } = req.body;
     const userId = req.user.id;
-
     if(!content) {
       res.status(400).send("Content is required.");
     }
@@ -55,7 +44,6 @@ export class CommentController {
     const userId = req.user.id;
     const { postId } = req.body;
     const commentId = req.params.id;
-
     try {
       const comment = await Comment.findById(commentId);
       if(comment.user_id !== userId) {
@@ -73,10 +61,14 @@ export class CommentController {
     try {
       const comments = Comment.getComments(postId);
       const commentMap = new Map();
-      comments.forEach(comment => {
-        commentMap.set(comment.id, { ...comment, replies: [] });
-      });
-
+      for (const comment of comments) {
+        commentMap.set(comment.id, {
+            ...comment,
+            replies: [],
+            voteCount: await voteController.countVotes(null, comment.id),
+            userVote: await voteController.checkUserVote(comments.user_id, null, comment.id)
+        });
+    }
       const tree = [];
       commentMap.forEach(comment => {
         if (comment.parent_comment_id) {

@@ -2,11 +2,14 @@
 <div class="reglog">
   <form action="/register" method="post" id="register" class="card">
     <label for="email">Email</label>
-    <input type="text" name="email" id="email">
+    <input type="text" name="email" id="email-registration">
+    <span id="emailError" style="color: red; display: none;">Invalid email format</span>
     <label for="username">Username</label>
-    <input type="text" name="username" id="username">
+    <input type="text" name="username" id="username-registration">
+    <span id="usernameError" style="color: red; display: none;">Invalid username format</span>
     <label for="password">Password</label>
-    <input type="text" name="password" id="password">
+    <input type="password" name="password" id="password-registration">
+    <span id="passwordError" style="color: red; display: none;">Invalid password format</span>
     <button type="submit">Create Account</button>
   </form>
 </div>
