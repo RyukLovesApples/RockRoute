@@ -121,6 +121,9 @@ Acknowledgments
 
 This project was inspired by Reddit and built as a way to deepen my understanding of full-stack web development and real-time communication.
 
+![Live Rendering Test](https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png?render_test=ALPHA_99_BETA_CODE)
+
 License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
+
